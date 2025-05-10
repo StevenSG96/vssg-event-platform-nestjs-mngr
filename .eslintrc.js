@@ -20,7 +20,7 @@ module.exports = {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'error',
 
     'no-unused-vars': 'warn',
     'eqeqeq': ['error', 'always'],
@@ -39,5 +39,11 @@ module.exports = {
       skipComments: true,
     }],
     'max-depth': ['warn', 4],
+
+    'keyword-spacing': ['error', { before: true, after: true }],
+    'space-infix-ops': ['error'],
+    'space-unary-ops': ['error', { words: true, nonwords: false }],
+    'key-spacing': ['error', { beforeColon: false, afterColon: true }],
+    '@typescript-eslint/type-annotation-spacing': ['error', { before: false, after: true }],
   },
 };
