@@ -1,0 +1,1 @@
+# vssg-event-platform-nestjs-mngr
