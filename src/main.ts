@@ -1,9 +1,10 @@
 import { NestFactory } from '@nestjs/core';
-import { EventModule } from './config/modules/event/event.module';
 import { ValidationPipe } from '@nestjs/common';
 
+import { AppModule } from './config/modules/app.module';
+
 async function bootstrap() {
-  const app = await NestFactory.create(EventModule);
+  const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }

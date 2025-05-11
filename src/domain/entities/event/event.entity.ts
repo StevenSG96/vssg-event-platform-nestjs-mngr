@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
 interface IEventEntity {
   id?: number;
@@ -29,7 +29,9 @@ export class EventEntity {
 
   public validateAvailableSeats(capacity: number, availableSeats: number) {
     if (capacity < availableSeats) {
-      throw new InternalServerErrorException('Capacity cannot be less than available seats');
+      throw new InternalServerErrorException(
+        'Capacity cannot be less than available seats',
+      );
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+
 import { EventEntity } from 'src/domain/entities/event/event.entity';
 import { IEventRepository } from 'src/domain/ports/events/out/eventRepository';
 
