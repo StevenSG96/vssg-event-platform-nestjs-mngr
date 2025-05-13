@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { LoginService } from 'src/aplication/services/user/login.service';
 import { AuthTokenProvider } from 'src/infrastructure/adapter/auth/authTokenProvider';
-import { PrimsaLogin } from 'src/infrastructure/persistence/prisma/login/prisma.login';
+import { PrismaLogin } from 'src/infrastructure/persistence/prisma/user/prisma.login';
 import { LoginController } from 'src/infrastructure/web/user/login.controller';
 
 @Module({
@@ -9,11 +9,11 @@ import { LoginController } from 'src/infrastructure/web/user/login.controller';
   providers: [
     {
       provide: 'ILoginHandler',
-      useFactory: (repo: PrimsaLogin, auth: AuthTokenProvider) =>
+      useFactory: (repo: PrismaLogin, auth: AuthTokenProvider) =>
         new LoginService(repo, auth),
-      inject: [PrimsaLogin, AuthTokenProvider],
+      inject: [PrismaLogin, AuthTokenProvider],
     },
-    PrimsaLogin,
+    PrismaLogin,
     AuthTokenProvider,
   ],
   imports: [LoginService],

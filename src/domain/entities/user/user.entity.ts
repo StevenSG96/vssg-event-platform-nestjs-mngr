@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 interface IUserEntity {
-  id: number;
+  id?: number;
   email: string;
   password: string;
   name: string;
