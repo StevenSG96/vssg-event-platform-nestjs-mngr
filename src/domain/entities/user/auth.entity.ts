@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 
-interface ILoginEntity {
+interface IAuthEntity {
   email: string;
   password: string;
 }
 
 @Injectable()
-export class LoginEntity {
+export class AuthEntity {
   public email;
   public password;
 
-  constructor(user: ILoginEntity) {
+  constructor(user: IAuthEntity) {
     Object.assign(this, user);
   }
 }

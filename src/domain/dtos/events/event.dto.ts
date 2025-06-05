@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   IsDateString,
   IsNotEmpty,
@@ -7,27 +8,27 @@ import {
 
 export class EventDTO {
   @IsNotEmpty()
-  name: string;
+    name: string;
 
   @IsNotEmpty()
-  description: string;
+    description: string;
 
   @IsDateString()
-  eventDate: Date;
+    eventDate: Date;
 
   @IsNotEmpty()
-  location: string;
+    location: string;
 
   @IsNotEmpty()
-  organizer: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  @IsPositive()
-  capacity: number;
+    organizer: string;
 
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  availableSeats: number;
+    capacity: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+    availableSeats: number;
 }

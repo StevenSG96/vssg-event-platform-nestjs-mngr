@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { SignUpService } from 'src/aplication/services/user/singup.service';
-import { PrismaSignUp } from 'src/infrastructure/persistence/prisma/user/prisma.singUp';
+import { SignUpService } from 'src/aplication/services/user/signUp.service';
+import { PrismaSignUp } from 'src/infrastructure/persistence/prisma/user/prisma.signUp';
 import { SignUpController } from 'src/infrastructure/web/user/signUp.controller';
 
 @Module({
