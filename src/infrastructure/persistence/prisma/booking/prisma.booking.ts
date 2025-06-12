@@ -13,9 +13,17 @@ export class PrismaBooking implements IBookingFetcher {
     const { id, bookingDate, eventId, userId, status } = book;
 
     await this.validateCapacity(eventId);
+    await this.existingBooking(eventId, userId);
 
-    await prisma.booking.create({
-      data: { id, bookingDate, eventId, userId, status },
+    await prisma.$transaction(async (tx) => {
+      await tx.booking.create({
+        data: { id, bookingDate, eventId, userId, status },
+      });
+
+      await tx.event.update({
+        where: { id: eventId },
+        data: { availableSeats: { decrement: 1 } },
+      });
     });
   }
   async readerAll(userId: number): Promise<BookEntity[]> {
@@ -26,9 +34,18 @@ export class PrismaBooking implements IBookingFetcher {
 
     return bookings;
   }
-  async canceller(book: BookEntity): Promise<void> {
+  async canceller(bookId: number): Promise<void> {
+    await this.validateBook(bookId);
+
+    await prisma.booking.update({
+      where: { id: bookId },
+      data: { status: 'cancelled' },
+    });
+  }
+
+  async validateBook(bookId: number) {
     const bookData = await prisma.booking.findUnique({
-      where: { id: book.id },
+      where: { id: bookId },
     });
 
     if (!bookData) {
@@ -45,6 +62,17 @@ export class PrismaBooking implements IBookingFetcher {
     }
     if (event.capacity <= 0) {
       throw new InternalServerErrorException('Event does not have capacity');
+    }
+  }
+
+  async existingBooking(eventId: number, userId: number): Promise<void> {
+    const bookExists = await prisma.booking.findFirst({
+      where: { AND: [{ userId: userId }, { eventId: eventId }] },
+    });
+    if (bookExists) {
+      throw new InternalServerErrorException(
+        'This user already has a reservation for this event',
+      );
     }
   }
 }

@@ -1,11 +1,14 @@
-import { EventDTO } from '../events/event.dto';
-import { UserDTO } from '../user/user.dto';
+/* eslint-disable prettier/prettier */
+import { IsDateString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class BookingDTO {
-  bookingDate: Date;
-  eventId: number;
-  event: EventDTO;
-  userId: number;
-  user: UserDTO;
-  status: 'confirmed' | 'cancelled';
+  @IsNotEmpty()
+  @IsDateString()
+    bookingDate: Date;
+
+  @IsNotEmpty()
+  @IsNumber()
+    eventId: number;
+
+  status?: 'confirmed' | 'cancelled';
 }

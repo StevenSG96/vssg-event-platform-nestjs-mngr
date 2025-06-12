@@ -3,10 +3,10 @@ import {
   Controller,
   Get,
   Inject,
-  // Param,
-  // ParseIntPipe,
+  Param,
+  ParseIntPipe,
   Post,
-  //Put,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -27,18 +27,22 @@ export class BookingController {
     return this.bookingService.readAll(req.user.userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() booking: BookingDTO): Promise<void> {
-    const bookingEntity = new BookEntity(booking);
+  create(@Req() req, @Body() booking: BookingDTO): Promise<void> {
+    const bookingEntity = new BookEntity({
+      ...booking,
+      userId: req.user.userId,
+      status: 'confirmed',
+    });
     return this.bookingService.create(bookingEntity);
   }
 
-  // @Put(':id')
-  // modify(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() event: EventDTO,
-  // ): Promise<void> {
-  //   const bookingEntity = new EventEntity(event);
-  //   return this.bookingService.cancel(id);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Put('/cancel/:id')
+  cancel(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<void> {
+    return this.bookingService.cancel(id);
+  }
 }

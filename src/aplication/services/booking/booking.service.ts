@@ -13,7 +13,7 @@ export class BookingService implements IBookingHandler {
     await this.bookingFetcher.creater(book);
   }
 
-  async cancel(book: BookEntity): Promise<void> {
-    await this.bookingFetcher.canceller(book);
+  async cancel(bookId: number): Promise<void> {
+    await this.bookingFetcher.canceller(bookId);
   }
 }
