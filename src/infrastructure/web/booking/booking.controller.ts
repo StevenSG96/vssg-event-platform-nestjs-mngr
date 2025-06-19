@@ -16,18 +16,17 @@ import { IBookingHandler } from 'src/domain/ports/bookings/in/bookingHandler';
 import { JwtAuthGuard } from 'src/infrastructure/guards/jwt.guard';
 
 @Controller('booking')
+@UseGuards(JwtAuthGuard)
 export class BookingController {
   constructor(
     @Inject('IBookingHandler') private readonly bookingService: IBookingHandler,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   readAll(@Req() req): Promise<BookEntity[]> {
     return this.bookingService.readAll(req.user.userId);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Req() req, @Body() booking: BookingDTO): Promise<void> {
     const bookingEntity = new BookEntity({
@@ -38,11 +37,8 @@ export class BookingController {
     return this.bookingService.create(bookingEntity);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put('/cancel/:id')
-  cancel(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<void> {
+  cancel(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.bookingService.cancel(id);
   }
 }
